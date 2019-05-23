@@ -66,83 +66,94 @@ export class AppComponent implements OnInit, DoCheck {
       this.right = 0;
       this.up = 0;
       this.down = 0;
+      this.ltr = false;
+      this.rtl = true;
       if(this.interval){
         clearInterval(this.interval)
       }
-      this.interval = setInterval(()=>{
-        if(this.marioPosition%parseInt(this.columns) === 0){
-          this.marioPosition+=parseInt(this.columns)-1;
-          if(this.balls[this.marioPosition] === true){
-            this.balls[this.marioPosition] = false;
-            this.ballsBusted +=1;
-          }
-        }else {
-          this.marioPosition-=1;
-          if(this.balls[this.marioPosition] === true){
-            this.balls[this.marioPosition] = false;
-            this.ballsBusted +=1;
-          }
-        }
-        
-      },250);
+      this.leftAndRightMovement();
       
     }else if(event.key==="ArrowRight" && this.right === 0){
       this.left = 0;
       this.right = 1;
       this.up = 0;
       this.down = 0;
+      this.ltr = true;
+      this.rtl = false;
       if(this.interval){
         clearInterval(this.interval)
       }
-      this.interval = setInterval(()=>{
-        if(this.marioPosition%parseInt(this.columns) === parseInt(this.columns)-1){
-          this.marioPosition-=parseInt(this.columns)-1;
-        }else this.marioPosition+=1;
-        
-      },250);
-    }else if(event.key==="ArrowUp"){
+      this.leftAndRightMovement();
+    }else if(event.key==="ArrowUp"){  //Moving Player Up
       this.left = 0;
       this.right = 0;
       this.up = 1;
       this.down = 0;
+      this.dtu = true;
+      this.utd =false;
       if(this.interval){
         clearInterval(this.interval)
       }
-      this.interval = setInterval(()=>{
-        if(this.marioPosition%parseInt(this.columns) === parseInt(this.columns)-1){
-          this.marioPosition-=parseInt(this.columns)-1;
-        }else this.marioPosition+=1;
-        
-      },250);
-    }else if(event.key==="ArrowDown"){
+      
+      this.upAndDownMovement();
+    }else if(event.key==="ArrowDown"){ //Moving Player Down
       this.left = 0;
       this.right = 0;
       this.up = 0;
       this.down = 1;
+      this.dtu = false;
+      this.utd =true;
       if(this.interval){
         clearInterval(this.interval)
       }
-      this.interval = setInterval(()=>{
-        if(this.marioPosition + parseInt(this.columns) > (parseInt(this.columns) * parseInt(this.columns))-1) {
-          this.dtu = true;
-          this.utd = false;
-          this.downToUp();
-        }else if(this.marioPosition - parseInt(this.columns) < 0) {
-          this.utd = true;
-          this.dtu = false;
-          this.upToDown();
-        }else if( this.marioPosition + parseInt(this.columns)<= (parseInt(this.columns) * parseInt(this.columns))-1 && this.utd === true){
-          this.upToDown()
-        }else if( this.marioPosition - parseInt(this.columns)>= 0 && this.dtu === true){
-          this.downToUp();
-        }else if( this.marioPosition + parseInt(this.columns)<= (parseInt(this.columns) * parseInt(this.columns))-1 && this.utd === false){
-          this.downToUp();
-        }else if( this.marioPosition - parseInt(this.columns)>= 0 && this.dtu === false){
-          this.upToDown();
-        }
+      this.upAndDownMovement()
+    }
+  }
+
+  leftAndRightMovement(){
+    this.interval = setInterval(()=>{
+      if(this.marioPosition%parseInt(this.columns) === parseInt(this.columns)-1){
+        this.rtl = true;
+        this.ltr = false;
+        this.rightToLeft();
+      }else if(this.marioPosition%parseInt(this.columns) === 0) {
+        this.rtl = false;
+        this.ltr = true;
+        this.leftToRight();
+      }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.rtl === true){
+        this.rightToLeft();
+      }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.ltr === true){
+        this.leftToRight();
+      }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.rtl === false){
+        this.leftToRight();
+      }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.ltr === false){
+        this.rightToLeft();
+      }
         
       },250);
-    }
+  }
+
+  upAndDownMovement(){
+    this.interval = setInterval(()=>{
+      if(this.marioPosition + parseInt(this.columns) > (parseInt(this.columns) * parseInt(this.columns))-1) {
+        this.dtu = true;
+        this.utd = false;
+        this.downToUp();
+      }else if(this.marioPosition - parseInt(this.columns) < 0) {
+        this.utd = true;
+        this.dtu = false;
+        this.upToDown();
+      }else if( this.marioPosition + parseInt(this.columns)<= (parseInt(this.columns) * parseInt(this.columns))-1 && this.utd === true){
+        this.upToDown()
+      }else if( this.marioPosition - parseInt(this.columns)>= 0 && this.dtu === true){
+        this.downToUp();
+      }else if( this.marioPosition + parseInt(this.columns)<= (parseInt(this.columns) * parseInt(this.columns))-1 && this.utd === false){
+        this.downToUp();
+      }else if( this.marioPosition - parseInt(this.columns)>= 0 && this.dtu === false){
+        this.upToDown();
+      }
+      
+    },250);
   }
 
   leftToRight(){
