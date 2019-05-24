@@ -1,5 +1,5 @@
 .mario-maze{
-    font-size: 36px;
+    font-size: 48px;
     text-align: center;
     font-family: 'Kaushan Script', cursive;
     color: rgb(255, 255, 255);
@@ -19,6 +19,11 @@
 .board{
     margin: 0;
     padding: 0;
+}
+
+.score-group{
+    display: flex;
+    flex-direction: row;
 }
 
 .options{
@@ -45,6 +50,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
     margin: 0 4vmin 4vmin 4vmin;
     padding-top: 4vmin;
 }
@@ -91,4 +97,36 @@
     margin-right: auto;
     background: rgb(52, 209, 20);
     color: white;
+}
+
+@media only screen and (max-width:1024px){
+    .controls{
+        flex-direction: column;
+    }
+
+    .score{
+        width: 20vw;
+        margin-top: 2vmin;
+    }
+
+    .score-group{
+        justify-content: center;
+    }
+
+    .options{
+        width: 40vw;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media only screen and (max-width:1024px){
+    .options{
+        width: 85vw;
+    }
+
+    .score{
+        width: 40vw;
+    }
 }

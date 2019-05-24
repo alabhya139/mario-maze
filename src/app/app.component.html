@@ -10,30 +10,32 @@
   </div>
   </mat-card>
 
-<div class="score">
-  <mat-card class="score-card">
-    <mat-card-header>
-      <mat-card-title>Score:</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p style="font-size:4vmin;">
-        {{scoreCount}}
-      </p>
-    </mat-card-content>
-  </mat-card>
-</div>
-
-<div class="score">
-  <mat-card class="steps-card">
-    <mat-card-header>
-      <mat-card-title>Steps:</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p style="font-size:4vmin;">
-        {{stepsCount}}
-      </p>
-    </mat-card-content>
-  </mat-card>
+<div class="score-group">
+    <div class="score">
+        <mat-card class="score-card">
+          <mat-card-header>
+            <mat-card-title>Score:</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p style="font-size:4vmin;">
+              {{scoreCount}}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      
+      <div class="score">
+        <mat-card class="steps-card">
+          <mat-card-header>
+            <mat-card-title>Steps:</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p style="font-size:4vmin;">
+              {{stepsCount}}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
 </div>
 </div>
 
