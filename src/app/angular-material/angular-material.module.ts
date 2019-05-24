@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [],
@@ -10,12 +11,14 @@ import {MatInputModule} from '@angular/material/input';
     CommonModule,
     MatGridListModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    MatCardModule
   ],
   exports: [
     MatGridListModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    MatCardModule
   ]
 })
 export class AngularMaterialModule { }

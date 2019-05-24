@@ -19,10 +19,15 @@ export class AppComponent implements OnInit, DoCheck {
   up = 0;
   down = 0;
   ballsBusted = 0;
+  displayBoard = false;
   ltr    //left to right
   rtl    //right to left
   utd    //up to down
   dtu    //down to up
+  stepsCount = 0;
+  play = true;
+  scoreCount = 0;
+  gameOver = false;
 
   ngOnInit() {
   }
@@ -30,11 +35,23 @@ export class AppComponent implements OnInit, DoCheck {
   ngDoCheck() {
     if (this.columns === "") {
       this.ind = [];
+      this.displayBoard = false;
+    }else{
+      if(this.scoreCount === parseInt(this.columns)){
+        this.gameOver = true;
+        clearInterval(this.interval);
+      }
     }
   }
 
   //Initialization of game
   setColumns() {
+    this.displayBoard = true;
+    this.gameOver = false;
+    this.scoreCount = 0;
+    this.stepsCount = 0;
+    this.play = true;
+    clearInterval(this.interval);
     if (this.columns !== undefined && this.columns !== null && this.columns !== "") {
       this.width = parseInt(this.columns) * 35;
       this.marioPosition = this.randomPosition(0, (parseInt(this.columns) * parseInt(this.columns)) - 1);4
@@ -50,7 +67,7 @@ export class AppComponent implements OnInit, DoCheck {
 
       this.ballsPosition.forEach(pos=>{
         if(pos===this.marioPosition){
-          pos = pos+1;
+          this.balls[pos+1] = true;
         }else {
           this.balls[pos] = true;
         }
@@ -112,22 +129,24 @@ export class AppComponent implements OnInit, DoCheck {
 
   leftAndRightMovement(){
     this.interval = setInterval(()=>{
-      if(this.marioPosition%parseInt(this.columns) === parseInt(this.columns)-1){
-        this.rtl = true;
-        this.ltr = false;
-        this.rightToLeft();
-      }else if(this.marioPosition%parseInt(this.columns) === 0) {
-        this.rtl = false;
-        this.ltr = true;
-        this.leftToRight();
-      }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.rtl === true){
-        this.rightToLeft();
-      }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.ltr === true){
-        this.leftToRight();
-      }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.rtl === false){
-        this.leftToRight();
-      }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.ltr === false){
-        this.rightToLeft();
+      if(this.play === true){
+        if(this.marioPosition%parseInt(this.columns) === parseInt(this.columns)-1){
+          this.rtl = true;
+          this.ltr = false;
+          this.rightToLeft();
+        }else if(this.marioPosition%parseInt(this.columns) === 0 && this.play ===true) {
+          this.rtl = false;
+          this.ltr = true;
+          this.leftToRight();
+        }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.rtl === true){
+          this.rightToLeft();
+        }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.ltr === true){
+          this.leftToRight();
+        }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.rtl === false){
+          this.leftToRight();
+        }else if(this.marioPosition%parseInt(this.columns) !== 0 && this.ltr === false){
+          this.rightToLeft();
+        }
       }
         
       },250);
@@ -135,22 +154,24 @@ export class AppComponent implements OnInit, DoCheck {
 
   upAndDownMovement(){
     this.interval = setInterval(()=>{
-      if(this.marioPosition + parseInt(this.columns) > (parseInt(this.columns) * parseInt(this.columns))-1) {
-        this.dtu = true;
-        this.utd = false;
-        this.downToUp();
-      }else if(this.marioPosition - parseInt(this.columns) < 0) {
-        this.utd = true;
-        this.dtu = false;
-        this.upToDown();
-      }else if( this.marioPosition + parseInt(this.columns)<= (parseInt(this.columns) * parseInt(this.columns))-1 && this.utd === true){
-        this.upToDown()
-      }else if( this.marioPosition - parseInt(this.columns)>= 0 && this.dtu === true){
-        this.downToUp();
-      }else if( this.marioPosition + parseInt(this.columns)<= (parseInt(this.columns) * parseInt(this.columns))-1 && this.utd === false){
-        this.downToUp();
-      }else if( this.marioPosition - parseInt(this.columns)>= 0 && this.dtu === false){
-        this.upToDown();
+      if(this.play === true){
+        if(this.marioPosition + parseInt(this.columns) > (parseInt(this.columns) * parseInt(this.columns))-1) {
+          this.dtu = true;
+          this.utd = false;
+          this.downToUp();
+        }else if(this.marioPosition - parseInt(this.columns) < 0) {
+          this.utd = true;
+          this.dtu = false;
+          this.upToDown();
+        }else if( this.marioPosition + parseInt(this.columns)<= (parseInt(this.columns) * parseInt(this.columns))-1 && this.utd === true){
+          this.upToDown()
+        }else if( this.marioPosition - parseInt(this.columns)>= 0 && this.dtu === true){
+          this.downToUp();
+        }else if( this.marioPosition + parseInt(this.columns)<= (parseInt(this.columns) * parseInt(this.columns))-1 && this.utd === false){
+          this.downToUp();
+        }else if( this.marioPosition - parseInt(this.columns)>= 0 && this.dtu === false){
+          this.upToDown();
+        }
       }
       
     },250);
@@ -158,18 +179,46 @@ export class AppComponent implements OnInit, DoCheck {
 
   leftToRight(){
     this.marioPosition += 1;
+    this.stepsCount+=1;
+    if(this.balls[this.marioPosition] === true){
+      this.scoreCount+=1;
+      this.balls[this.marioPosition] = false;
+    }
   }
 
   rightToLeft(){
     this.marioPosition -= 1;
+    this.stepsCount+=1;
+    if(this.balls[this.marioPosition] === true){
+      this.scoreCount+=1;
+      this.balls[this.marioPosition] = false;
+    }
   }
 
   downToUp(){
     this.marioPosition -= parseInt(this.columns);
+    this.stepsCount+=1;
+    if(this.balls[this.marioPosition] === true){
+      this.scoreCount+=1;
+      this.balls[this.marioPosition] = false;
+    }
   }
 
   upToDown(){
     this.marioPosition += parseInt(this.columns);
+    this.stepsCount+=1;
+    if(this.balls[this.marioPosition] === true){
+      this.scoreCount+=1;
+      this.balls[this.marioPosition] = false;
+    }
+  }
+
+  playIt(){
+    this.play = true;
+  }
+
+  pauseIt(){
+    this.play = false;
   }
 
   //function to generate random player position on start

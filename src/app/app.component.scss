@@ -1,10 +1,19 @@
+.mario-maze{
+    font-size: 36px;
+    text-align: center;
+    font-family: 'Kaushan Script', cursive;
+    color: rgb(255, 255, 255);
+    background: transparent;
+    outline: none;
+}
+
 .maze{
     margin: 16px;
 }
 
 .element{
     max-width: 35px;
-    border: 2px solid rgb(133, 133, 133);
+    border: 2px solid rgb(255, 255, 255);
 }
 
 .board{
@@ -13,7 +22,7 @@
 }
 
 .options{
-    margin: 16px;
+    margin-right: 2vmin;
 }
 
 .option-button{
@@ -24,4 +33,62 @@
 
 .mario{
     width: 20px;
+}
+
+.score{
+    width: 10vw;
+    text-align: center;
+    margin-right: 2vmin;
+}
+
+.controls{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 4vmin 4vmin 4vmin;
+    padding-top: 4vmin;
+}
+
+.maze{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.controllers{
+    margin: 4vmin;
+    text-align: center;
+}
+
+.end-game{
+    display: flex;
+    justify-content: center;
+}
+
+.control-button{
+    background: white;
+    color: black;
+}
+
+.end-game mat-card{
+    width: 20vw;
+    padding: 4vmin;
+    text-align: center;
+}
+
+.message{
+    font-size: 28px;
+}
+
+.scoreC{
+    font-size: 20px;
+}
+
+.end-game button{
+    margin-top: 2vmin;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgb(52, 209, 20);
+    color: white;
 }

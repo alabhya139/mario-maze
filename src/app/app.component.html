@@ -1,11 +1,43 @@
-<div class="options">
-    <mat-form-field class="option-form">
-        <input matInput placeholder="Number of columns" value="columns" [(ngModel)]="columns">
-    </mat-form-field>
-    <button class="option-button" (click)="setColumns()" mat-raised-button>Continue</button>
+<mat-card class="mario-maze">Mario Maze</mat-card>
+<div class="controls">
+  
+  <mat-card class="options">
+    <div class="options">
+      <mat-form-field class="option-form">
+          <input matInput placeholder="Number of columns" value="columns" [(ngModel)]="columns">
+      </mat-form-field>
+      <button class="option-button" (click)="setColumns()" mat-raised-button>Play</button>
+  </div>
+  </mat-card>
+
+<div class="score">
+  <mat-card class="score-card">
+    <mat-card-header>
+      <mat-card-title>Score:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p style="font-size:4vmin;">
+        {{scoreCount}}
+      </p>
+    </mat-card-content>
+  </mat-card>
 </div>
 
-<div class="maze">
+<div class="score">
+  <mat-card class="steps-card">
+    <mat-card-header>
+      <mat-card-title>Steps:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p style="font-size:4vmin;">
+        {{stepsCount}}
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
+</div>
+
+<div *ngIf="displayBoard===true && gameOver === false" class="maze">
   <mat-grid-list [style.width.px] = "width" cols="{{columns}}" rowHeight="35px">
     <div *ngFor="let i of ind; let index = index" class="board">
         <mat-grid-tile class="element">
@@ -14,4 +46,21 @@
         </mat-grid-tile>
     </div>
   </mat-grid-list>
+  <div class="controllers">
+    <button class="control-button" (click)="playIt()" style="margin-right:2vmin;" mat-mini-fab color="primary"><i class="fas fa-play"></i></button>
+    <button class="control-button" (click)="pauseIt()" mat-mini-fab color="primary"><i class="fas fa-pause"></i></button>
+  </div>
+</div>
+
+<div *ngIf="gameOver===true" class="end-game">
+    <mat-card>
+        <div class="message">
+          Game Over
+        </div>
+
+        <div class="scoreC">
+          Score: {{scoreCount}}
+        </div>
+        <button  (click)="setColumns()" mat-raised-button><i style="margin-right:1vmin;" class="fas fa-redo-alt"></i>New Game</button>
+      </mat-card>
 </div>
